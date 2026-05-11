@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.senttire.in/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.senttire.in/request-quote.php</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/cad-design.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/product-development.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/rapid-prototyping.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/3d-printing.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/plastic-injection.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/rubber-molding.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/cnc-milling.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/cnc-laser.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/sheetmetal.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/metal-casting.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.senttire.in/services/aluminum-die-casting.php</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+</urlset>
