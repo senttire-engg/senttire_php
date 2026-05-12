@@ -225,7 +225,8 @@ footer.site-footer {
   overflow: hidden;
 }
 .hero-bg { position: absolute; inset: 0; }
-.hero-bg img {
+.hero-bg-static,
+.hero-bg-video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -233,11 +234,22 @@ footer.site-footer {
   object-fit: cover;
   object-position: center;
 }
+.hero-bg-static {
+  display: none;
+  z-index: 0;
+}
+.hero-bg-video {
+  z-index: 0;
+}
 .hero-bg::after {
   content: ''; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(90deg, rgba(10,10,15,0.97) 0%, rgba(10,10,15,0.85) 55%, rgba(10,10,15,0.5) 100%);
 }
-.hero-content { position: relative; z-index: 1; padding: 5rem 0; max-width: 700px; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-video { display: none; }
+  .hero-bg-static { display: block; }
+}
+.hero-content { position: relative; z-index: 2; padding: 5rem 0; max-width: 700px; }
 .hero-content h1 { margin-bottom: 1.25rem; }
 .hero-content p { font-size: 1.1rem; margin-bottom: 2rem; max-width: 560px; }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; }

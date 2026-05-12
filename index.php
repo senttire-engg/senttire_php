@@ -11,8 +11,16 @@ include 'header.php';
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="images/hero-cnc-machining.png"
+    <img class="hero-bg-static"
+         src="<?php echo htmlspecialchars($root); ?>images/hero-cnc-machining.png"
          alt="Precision CNC milling machine working on a detailed metal part" />
+    <video class="hero-bg-video"
+           autoplay muted loop playsinline
+           poster="<?php echo htmlspecialchars($root); ?>images/hero-cnc-machining.png"
+           aria-hidden="true">
+      <source src="<?php echo htmlspecialchars($root); ?>videos/hailuo-2_3_cnc_milling_while_tool_is_cutting_titanium_metal_block_metal_chips_flying_and_as-0.mp4"
+              type="video/mp4" />
+    </video>
   </div>
   <div class="container">
     <div class="hero-content">
