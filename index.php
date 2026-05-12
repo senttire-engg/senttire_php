@@ -90,17 +90,17 @@ include 'header.php';
 
       <?php
       $services = [
-        ['icon'=>'pen','title'=>'3D CAD Industrial Product Design','desc'=>'Professional CAD modeling and engineering design services for complex mechanical systems.','url'=>'services/cad-design.php'],
-        ['icon'=>'bulb','title'=>'Product Development','desc'=>'End-to-end product development from concept to production-ready designs.','url'=>'services/product-development.php'],
-        ['icon'=>'layers','title'=>'Rapid Prototyping','desc'=>'Quick-turn prototyping with 3D printing and CNC machining for design validation.','url'=>'services/rapid-prototyping.php'],
-        ['icon'=>'printer','title'=>'3D Printing','desc'=>'Industrial-grade FDM, SLA, and SLS 3D printing for custom manufacturing.','url'=>'services/3d-printing.php'],
-        ['icon'=>'factory','title'=>'Plastic Injection Molding','desc'=>'High-volume production with consistent quality and wide material selection.','url'=>'services/plastic-injection.php'],
-        ['icon'=>'drop','title'=>'Rubber Molding','desc'=>'Custom elastomer manufacturing for seals, gaskets, and industrial components.','url'=>'services/rubber-molding.php'],
-        ['icon'=>'cog','title'=>'CNC Milling and Turning','desc'=>'Precision CNC machining for production-grade components with tight tolerances.','url'=>'services/cnc-milling.php'],
-        ['icon'=>'zap','title'=>'CNC Laser Cutting','desc'=>'High-precision laser cutting for complex 2D profiles in various materials.','url'=>'services/cnc-laser.php'],
-        ['icon'=>'hammer','title'=>'Sheetmetal Forming','desc'=>'Complete sheetmetal fabrication including cutting, bending, forming, and welding.','url'=>'services/sheetmetal.php'],
-        ['icon'=>'flame','title'=>'Metal Casting','desc'=>'Sand, investment, and permanent mold casting for complex metal parts.','url'=>'services/metal-casting.php'],
-        ['icon'=>'wrench','title'=>'Aluminum Die Casting','desc'=>'High-pressure die casting for complex thin-wall aluminum parts.','url'=>'services/aluminum-die-casting.php'],
+        ['icon'=>'pen','title'=>'3D CAD Industrial Product Design','desc'=>'Professional CAD modeling and engineering design services for complex mechanical systems.'],
+        ['icon'=>'bulb','title'=>'Product Development','desc'=>'End-to-end product development from concept to production-ready designs.'],
+        ['icon'=>'layers','title'=>'Rapid Prototyping','desc'=>'Quick-turn prototyping with 3D printing and CNC machining for design validation.'],
+        ['icon'=>'printer','title'=>'3D Printing','desc'=>'Industrial-grade FDM, SLA, and SLS 3D printing for custom manufacturing.'],
+        ['icon'=>'factory','title'=>'Plastic Injection Molding','desc'=>'High-volume production with consistent quality and wide material selection.'],
+        ['icon'=>'drop','title'=>'Rubber Molding','desc'=>'Custom elastomer manufacturing for seals, gaskets, and industrial components.'],
+        ['icon'=>'cog','title'=>'CNC Milling and Turning','desc'=>'Precision CNC machining for production-grade components with tight tolerances.'],
+        ['icon'=>'zap','title'=>'CNC Laser Cutting','desc'=>'High-precision laser cutting for complex 2D profiles in various materials.'],
+        ['icon'=>'hammer','title'=>'Sheetmetal Forming','desc'=>'Complete sheetmetal fabrication including cutting, bending, forming, and welding.'],
+        ['icon'=>'flame','title'=>'Metal Casting','desc'=>'Sand, investment, and permanent mold casting for complex metal parts.'],
+        ['icon'=>'wrench','title'=>'Aluminum Die Casting','desc'=>'High-pressure die casting for complex thin-wall aluminum parts.'],
       ];
 
       $icons = [
@@ -117,7 +117,7 @@ include 'header.php';
         'wrench'  => '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
       ];
       foreach ($services as $s): ?>
-      <a href="<?php echo $s['url']; ?>" class="service-card">
+      <div class="service-card">
         <div class="service-card-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -126,8 +126,7 @@ include 'header.php';
         </div>
         <h3><?php echo htmlspecialchars($s['title']); ?></h3>
         <p><?php echo htmlspecialchars($s['desc']); ?></p>
-        <span class="service-card-link">Learn more →</span>
-      </a>
+      </div>
       <?php endforeach; ?>
 
     </div>
@@ -138,9 +137,30 @@ include 'header.php';
 <section class="cta-strip">
   <div class="container">
     <h2>Shipping Globally</h2>
-    <p>Speed Delivery: 3–5 days by AIR
-Default Delivery: 7–15 days by AIR
-Bulk &amp; Default: 30–45 days by Sea</p>
+    <p style="max-width:640px;margin:0.75rem auto 0;color:rgba(255,255,255,0.88);font-size:1.05rem;">Reliable air and sea options for samples, production runs, and bulk orders.</p>
+    <div class="shipping-options">
+      <div class="shipping-option">
+        <div class="shipping-option-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-1.2 2.7c-.3.8.1 1.7.9 2l9.1 3.5c.5.1 1.1-.1 1.4-.5l2.3-2.9"/></svg>
+        </div>
+        <h3>Speed Delivery</h3>
+        <p>3–5 days by AIR</p>
+      </div>
+      <div class="shipping-option">
+        <div class="shipping-option-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-1.2 2.7c-.3.8.1 1.7.9 2l9.1 3.5c.5.1 1.1-.1 1.4-.5l2.3-2.9"/></svg>
+        </div>
+        <h3>Default Delivery</h3>
+        <p>7–15 days by AIR</p>
+      </div>
+      <div class="shipping-option">
+        <div class="shipping-option-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20l-2-10H4L2 21z"/><path d="M6 11V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/></svg>
+        </div>
+        <h3>Bulk &amp; Default</h3>
+        <p>30–45 days by Sea</p>
+      </div>
+    </div>
     <a href="request-quote.php" class="btn btn-primary btn-lg">Request a Quote</a>
   </div>
 </section>

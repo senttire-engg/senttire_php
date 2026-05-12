@@ -6,14 +6,32 @@
  */
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
-define('RECIPIENT_EMAIL', 'senttire.info@gmail.com');   // ← your real email here
+define('RECIPIENT_EMAIL', 'senttire.info@gmail.com');
 define('FROM_EMAIL',      'noreply@senttire.in');
 define('SITE_NAME',       'Senttire Engineering Solutions');
 define('MAX_FILE_SIZE',   20 * 1024 * 1024);            // 20 MB per file
 define('MAX_FILES',       5);
-define('ALLOWED_TYPES',   ['application/pdf','application/msword',
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                            'image/jpeg','image/png','image/gif','image/webp']);
+
+/** Whitelist by extension (MIME varies for CAD files across hosts). */
+define('ALLOWED_EXTENSIONS', [
+    'pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'gif', 'webp',
+    'step', 'stp', 'iges', 'igs', 'dxf', 'dwg', 'stl', 'obj',
+]);
+
+define('CAD_EXTENSIONS', ['step', 'stp', 'iges', 'igs', 'dxf', 'dwg', 'stl', 'obj']);
+
+define('ALLOWED_MIMES', [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+    'application/acad', 'image/vnd.dwg', 'image/vnd.dxf',
+    'application/dxf', 'application/dwg', 'application/x-dwg',
+    'model/stl', 'application/sla', 'application/vnd.ms-pki.stl',
+    'model/obj',
+    'application/step', 'application/x-step', 'model/step',
+    'model/iges', 'application/iges',
+]);
 // ─────────────────────────────────────────────────────────────────────────────
 
 header('Content-Type: application/json; charset=utf-8');
@@ -30,8 +48,56 @@ function clean(string $val): string {
     return htmlspecialchars(strip_tags(trim($val)), ENT_QUOTES, 'UTF-8');
 }
 
+/** MIME sniff; CAD uploads often report as application/octet-stream. */
+function upload_mime_type(string $tmpPath): string {
+    if (function_exists('mime_content_type')) {
+        $m = @mime_content_type($tmpPath);
+        if (is_string($m) && $m !== '') {
+            return $m;
+        }
+    }
+    if (class_exists('finfo')) {
+        $fi = new finfo(FILEINFO_MIME_TYPE);
+        $m = @$fi->file($tmpPath);
+        if (is_string($m) && $m !== '') {
+            return $m;
+        }
+    }
+    return '';
+}
+
+function is_allowed_upload(string $tmpPath, string $filename): bool {
+    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    if (!in_array($ext, ALLOWED_EXTENSIONS, true)) {
+        return false;
+    }
+    $mime = upload_mime_type($tmpPath);
+    $blocked = [
+        'text/x-php', 'application/x-httpd-php', 'application/x-php',
+        'text/html', 'application/xhtml+xml',
+    ];
+    if ($mime !== '' && in_array($mime, $blocked, true)) {
+        return false;
+    }
+    if (in_array($mime, ALLOWED_MIMES, true)) {
+        return true;
+    }
+    if ($mime === 'application/octet-stream' && in_array($ext, CAD_EXTENSIONS, true)) {
+        return true;
+    }
+    if ($mime === 'text/plain' && $ext === 'obj') {
+        return true;
+    }
+    // Known-safe office/images with empty or generic MIME on some Windows installs
+    if (in_array($ext, ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'gif', 'webp'], true)
+        && ($mime === '' || $mime === 'application/octet-stream')) {
+        return true;
+    }
+    return false;
+}
+
 // ── Collect & validate fields ──────────────────────────────────────────────
-$required = ['company_name','contact_name','email','phone','service_type','project_description'];
+$required = ['company_name', 'contact_name', 'email', 'service_type', 'project_description'];
 $errors   = [];
 
 $fields = [];
@@ -44,6 +110,7 @@ foreach ($required as $key) {
 }
 
 // Optional fields
+$fields['phone']        = clean($_POST['phone']        ?? '');
 $fields['budget_range'] = clean($_POST['budget_range'] ?? '');
 $fields['timeline']     = clean($_POST['timeline']     ?? '');
 
@@ -73,14 +140,16 @@ if (!empty($_FILES['attachments']['name'][0])) {
             $errors[] = "File '{$_FILES['attachments']['name'][$i]}' exceeds 20 MB limit.";
             continue;
         }
-        $mime = mime_content_type($_FILES['attachments']['tmp_name'][$i]);
-        if (!in_array($mime, ALLOWED_TYPES, true)) {
-            $errors[] = "File type '{$mime}' not allowed.";
+        $tmp = $_FILES['attachments']['tmp_name'][$i];
+        $origName = $_FILES['attachments']['name'][$i];
+        if (!is_allowed_upload($tmp, $origName)) {
+            $errors[] = "File '{$origName}' type not allowed (extension or MIME).";
             continue;
         }
+        $mime = upload_mime_type($tmp) ?: 'application/octet-stream';
         $attachments[] = [
-            'name'     => basename($_FILES['attachments']['name'][$i]),
-            'tmp'      => $_FILES['attachments']['tmp_name'][$i],
+            'name'     => basename($origName),
+            'tmp'      => $tmp,
             'mime'     => $mime,
         ];
     }
@@ -104,7 +173,7 @@ $body_lines = [
     "Company Name   : {$fields['company_name']}",
     "Contact Name   : {$fields['contact_name']}",
     "Email          : {$fields['email']}",
-    "Phone          : {$fields['phone']}",
+    'Phone / WhatsApp: ' . ($fields['phone'] !== '' ? $fields['phone'] : 'Not provided'),
     '',
     '─────────────────────────────────────',
     ' PROJECT DETAILS',
@@ -130,7 +199,7 @@ $rows = [
     'Company Name'      => $fields['company_name'],
     'Contact Name'      => $fields['contact_name'],
     'Email'             => '<a href="mailto:'.$fields['email'].'">'.$fields['email'].'</a>',
-    'Phone'             => $fields['phone'],
+    'Phone / WhatsApp'  => $fields['phone'] !== '' ? $fields['phone'] : 'Not provided',
     'Service Type'      => $fields['service_type'],
     'Budget Range'      => $fields['budget_range'] ?: '—',
     'Timeline'          => $fields['timeline']     ?: '—',

@@ -43,8 +43,8 @@ include 'header.php';
                 <input type="email" id="email" name="email" required autocomplete="email" />
               </div>
               <div class="form-group">
-                <label for="phone">Phone / WhatsApp <span style="color:#f87171">*</span></label>
-                <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="+91 xxxxxxxxxx" />
+                <label for="phone">Phone / WhatsApp <span style="color:var(--text-dim);font-weight:400;">(optional)</span></label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+91 xxxxxxxxxx" />
               </div>
             </div>
 
@@ -106,9 +106,9 @@ include 'header.php';
                   <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                 </svg>
                 <p>Click to upload or drag &amp; drop</p>
-                <small>PDF, Word, JPG, PNG, WebP</small>
+                <small>PDF, Word, images, STEP, IGES, DXF, DWG, STL, OBJ</small>
               </label>
-              <input type="file" id="attachments" name="attachments[]" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.webp" style="display:none;" />
+              <input type="file" id="attachments" name="attachments[]" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.webp,.step,.stp,.iges,.igs,.dxf,.dwg,.stl,.obj" style="display:none;" />
               <div id="fileList" style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.4rem;"></div>
             </div>
 
