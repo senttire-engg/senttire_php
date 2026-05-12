@@ -11,8 +11,8 @@ include 'header.php';
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1693656397837-c356efc83621?auto=format&fit=crop&w=1600&q=80"
-         alt="Advanced CAD design and manufacturing facility" />
+    <img src="images/hero-cnc-machining.png"
+         alt="Precision CNC milling machine working on a detailed metal part" />
   </div>
   <div class="container">
     <div class="hero-content">

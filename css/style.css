@@ -225,9 +225,16 @@ footer.site-footer {
   overflow: hidden;
 }
 .hero-bg { position: absolute; inset: 0; }
-.hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 .hero-bg::after {
-  content: ''; position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(90deg, rgba(10,10,15,0.97) 0%, rgba(10,10,15,0.85) 55%, rgba(10,10,15,0.5) 100%);
 }
 .hero-content { position: relative; z-index: 1; padding: 5rem 0; max-width: 700px; }
